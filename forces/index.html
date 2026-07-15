@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>势力展示｜沉星尽春</title>
+  <meta name="description" content="沉星尽春势力展示：大景官员名单与皇家玉牒。" />
+  <link rel="canonical" href="https://cxjc.whitemoon319.xyz/forces/" />
+  <link rel="icon" type="image/webp" href="../resource/img/favicon.webp" />
+  <link rel="stylesheet" href="../resource/css/style.css" />
+  <script defer src="../resource/js/site-nav.js"></script>
+  <style>
+    .forces-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .force-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      padding: 36px 24px;
+      border: 1px solid var(--hairline);
+      border-radius: var(--radius);
+      background: var(--paper-warm);
+      text-decoration: none;
+      text-align: center;
+      transition: box-shadow var(--transition), border-color var(--transition);
+    }
+    .force-card:hover { border-color: var(--cinnabar-line); box-shadow: var(--shadow-sm); }
+    .force-seal {
+      width: 56px; height: 56px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-brush);
+      font-size: 1.6rem;
+      color: #fff;
+      border-radius: var(--radius-sm);
+    }
+    .force-seal.off { background: var(--cinnabar); }
+    .force-seal.roy { background: var(--deep-blue); }
+    .force-card h3 { font-family: var(--font-serif); font-size: 1.1rem; color: var(--ink-deep); margin: 0; }
+    .force-card p { font-size: 0.85rem; color: var(--ink-mid); margin: 0; }
+    @media (max-width: 480px) {
+      .forces-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <a class="skip-link" href="#main-content">跳至正文</a>
+
+  <nav class="site-nav">
+    <div class="site-nav-inner">
+      <a class="site-logo" href="../index.html">
+        <img src="../resource/img/logo.webp" alt="" width="32" height="32" />
+        <span class="site-logo-text">沉星尽春</span>
+      </a>
+      <ul class="nav-links">
+        <li><a class="nav-link" href="../world/">卷首</a></li>
+        <li><a class="nav-link" href="../preset/">固设</a></li>
+        <li><a class="nav-link" href="../chars/">人设</a></li>
+        <li><a class="nav-link active" href="./">势力</a></li>
+        <li><a class="nav-link" href="../timeline/">年表</a></li>
+        <li><a class="nav-link" href="../index.html#about">跋</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main id="main-content" class="section">
+    <div class="section-head reveal">
+      <span class="kicker">势 力</span>
+      <h1 class="section-title">各方势力</h1>
+      <p class="section-lead">朝堂内外，血脉官秩。择一查阅。</p>
+    </div>
+
+    <div class="forces-grid">
+      <a class="force-card reveal" data-delay="1" href="officials/">
+        <div class="force-seal off">官</div>
+        <h3>大景官员名单</h3>
+        <p>中书门下 · 枢密三司 · 六部百职</p>
+      </a>
+      <a class="force-card reveal" data-delay="2" href="royal/">
+        <div class="force-seal roy">皇</div>
+        <h3>皇家玉牒</h3>
+        <p>太祖肇国 · 今上五子 · 血脉谱系</p>
+      </a>
+    </div>
+
+    <p style="text-align:center;margin-top:56px;">
+      <a class="btn btn-ghost" href="../index.html#portals">← 返回目录</a>
+    </p>
+  </main>
+
+  <button class="float-nav float-nav-pulse" id="floatNav" title="返回顶部">↑</button>
+
+  <footer class="site-footer">
+    <img class="footer-seal"
+         src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'><rect x='4' y='4' width='40' height='40' rx='6' fill='%23c23a30'/><text x='24' y='33' font-family='serif' font-size='24' fill='white' text-anchor='middle'>尽</text></svg>"
+         alt="" />
+    <h3>沉星尽春</h3>
+    <p>© 2026 ChenXingJinChun · 朱砂落墨 · 尽春长卷</p>
+  </footer>
+
+  <script>
+    document.getElementById('floatNav').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal:not(.in)').forEach(el => io.observe(el));
+  </script>
+
+</body>
+</html>

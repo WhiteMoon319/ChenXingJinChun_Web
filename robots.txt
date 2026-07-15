@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://cxjc.whitemoon319.xyz/sitemap.xml

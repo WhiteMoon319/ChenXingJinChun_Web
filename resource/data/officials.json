@@ -1,0 +1,51 @@
+{
+  "title": "大景官元名单",
+  "groups": [
+    {
+      "name": "中书门下",
+      "positions": [
+        { "title": "同平章事", "rank": "正一品", "holder": "", "slug": "" },
+        { "title": "参知政事", "rank": "从二品", "holder": "", "slug": "" },
+        { "title": "中书令", "rank": "正一品", "holder": "", "slug": "" },
+        { "title": "门下侍中", "rank": "正一品", "holder": "", "slug": "" },
+        { "title": "尚书令", "rank": "正一品", "holder": "", "slug": "" }
+      ]
+    },
+    {
+      "name": "枢密院",
+      "positions": [
+        { "title": "枢密使", "rank": "从一品", "holder": "", "slug": "" },
+        { "title": "枢密副使", "rank": "正二品", "holder": "", "slug": "" }
+      ]
+    },
+    {
+      "name": "三司",
+      "positions": [
+        { "title": "三司使", "rank": "正二品", "holder": "", "slug": "" }
+      ]
+    },
+    {
+      "name": "六部",
+      "positions": [
+        { "title": "吏部尚书", "rank": "正三品", "holder": "", "slug": "" },
+        { "title": "户部尚书", "rank": "正三品", "holder": "", "slug": "" },
+        { "title": "礼部尚书", "rank": "正三品", "holder": "", "slug": "" },
+        { "title": "兵部尚书", "rank": "正三品", "holder": "", "slug": "" },
+        { "title": "刑部尚书", "rank": "正三品", "holder": "", "slug": "" },
+        { "title": "工部尚书", "rank": "正三品", "holder": "", "slug": "" }
+      ]
+    },
+    {
+      "name": "御史台",
+      "positions": [
+        { "title": "御史中丞", "rank": "从三品", "holder": "", "slug": "" }
+      ]
+    },
+    {
+      "name": "翰林院",
+      "positions": [
+        { "title": "翰林学士", "rank": "正三品", "holder": "", "slug": "" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>大景官员名单｜势力展示｜沉星尽春</title>
+  <meta name="description" content="沉星尽春势力展示：大景官员名单。" />
+  <link rel="canonical" href="https://cxjc.whitemoon319.xyz/forces/officials/" />
+  <link rel="icon" type="image/webp" href="../../resource/img/favicon.webp" />
+  <link rel="stylesheet" href="../../resource/css/style.css" />
+  <script defer src="../../resource/js/site-nav.js"></script>
+  <style>
+    .roster-wrap { max-width: 680px; margin: 0 auto; }
+    .roster-back { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-serif); font-size: 0.85rem; color: var(--ink-mid); text-decoration: none; margin-bottom: 24px; transition: color var(--transition); }
+    .roster-back:hover { color: var(--cinnabar); }
+    .roster-group { margin-bottom: 40px; }
+    .roster-group-title { font-family: var(--font-serif); font-size: 1.2rem; color: var(--cinnabar); border-bottom: 1px solid var(--cinnabar-line); padding-bottom: 6px; margin-bottom: 12px; letter-spacing: 0.15em; }
+    .roster-table { width: 100%; border-collapse: collapse; }
+    .roster-table th, .roster-table td { padding: 10px 0; text-align: left; font-size: 0.95rem; border-bottom: 1px solid var(--hairline); }
+    .roster-table th { font-family: var(--font-serif); color: var(--ink-mid); font-weight: 400; font-size: 0.8rem; letter-spacing: 0.1em; }
+    .roster-table td:first-child { width: 30%; padding-right: 16px; }
+    .roster-rank { display: inline-block; font-size: 0.75rem; padding: 2px 10px; border-radius: 99px; background: var(--cinnabar-mist); color: var(--cinnabar); border: 1px solid var(--cinnabar-line); white-space: nowrap; }
+    .roster-holder { color: var(--ink-mid); }
+    .roster-holder:empty::after { content: "虚位"; color: var(--ink-light); font-style: italic; }
+    .roster-link { color: var(--cinnabar); text-decoration: none; border-bottom: 1px dashed var(--cinnabar-line); transition: border-color var(--transition); }
+    .roster-link:hover { border-bottom-style: solid; }
+    @media (max-width: 599px) {
+      .roster-table th, .roster-table td { font-size: 0.85rem; padding: 8px 0; }
+      .roster-rank { font-size: 0.7rem; padding: 1px 8px; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">跳至正文</a>
+  <nav class="site-nav"><div class="site-nav-inner"><a class="site-logo" href="../../index.html"><img src="../../resource/img/logo.webp" alt="沉星尽春" /><span class="site-logo-text">沉星尽春</span></a><ul class="nav-links"><li><a class="nav-link" href="../../world/">卷首</a></li><li><a class="nav-link" href="../../preset/">固设</a></li><li><a class="nav-link" href="../../chars/">人设</a></li><li><a class="nav-link active" href="../">势力</a></li><li><a class="nav-link" href="../../timeline/">年表</a></li><li><a class="nav-link" href="../../index.html#about">跋</a></li></ul></div></nav>
+
+  <main id="main-content" class="section">
+    <a class="roster-back" href="../">← 返回势力总览</a>
+    <div class="section-head reveal" style="text-align:left;margin-bottom:40px;">
+      <span class="kicker" style="margin-left:0;">势 力</span>
+      <h1 class="section-title" style="text-align:left;">大景官员名单</h1>
+      <p class="section-lead" id="roster-lead" style="margin:0;text-align:left;">朝堂百职，各司其命。</p>
+    </div>
+    <div class="roster-wrap" id="roster"></div>
+    <p style="text-align:center;margin-top:56px;"><a class="btn btn-ghost" href="../">← 返回势力总览</a></p>
+  </main>
+
+  <footer class="site-footer"><img class="footer-seal" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'><rect x='4' y='4' width='40' height='40' rx='6' fill='%23c23a30'/><text x='24' y='33' font-family='serif' font-size='24' fill='white' text-anchor='middle'>尽</text></svg>" alt="" /><h3>沉星尽春</h3><p>© 2026 ChenXingJinChun · 朱砂落墨 · 尽春长卷</p></footer>
+
+  <script>
+    async function loadRoster() {
+      const el = document.getElementById('roster');
+      try {
+        const resp = await fetch('../../resource/data/officials.json');
+        if (!resp.ok) throw new Error(resp.status);
+        const data = await resp.json();
+        document.getElementById('roster-lead').textContent = '朝堂百职，各司其命。';
+        document.title = data.title + '｜势力展示｜沉星尽春';
+        let html = '';
+        data.groups.forEach(g => {
+          html += '<div class="roster-group reveal">';
+          html += '<h2 class="roster-group-title">' + g.name + '</h2>';
+          html += '<table class="roster-table"><thead><tr><th>官职</th><th>品级</th><th>任职</th></tr></thead><tbody>';
+          g.positions.forEach(p => {
+            const cell = p.slug
+              ? '<a href="../../chars/' + p.slug + '/" class="roster-link">' + p.holder + '</a>'
+              : p.holder || '';
+            html += '<tr><td>' + p.title + '</td><td><span class="roster-rank">' + p.rank + '</span></td><td><span class="roster-holder">' + cell + '</span></td></tr>';
+          });
+          html += '</tbody></table></div>';
+        });
+        el.innerHTML = html;
+      } catch (e) {
+        el.innerHTML = '<p style="text-align:center;color:var(--ink-mid);padding:40px 0;">官职数据暂未载入，待后续补充。</p>';
+      }
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+      document.querySelectorAll('.reveal:not(.in)').forEach(el => io.observe(el));
+    }
+    loadRoster();
+  </script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>景朝大事｜剧情年表｜沉星尽春</title>
+  <meta name="description" content="天和、天启年间，大景王朝大事略记。" />
+  <link rel="canonical" href="https://cxjc.whitemoon319.xyz/timeline/" />
+  <link rel="icon" type="image/webp" href="../resource/img/favicon.webp" />
+  <link rel="stylesheet" href="../resource/css/style.css" />
+  <script defer src="../resource/js/site-nav.js"></script>
+</head>
+<body>
+
+  <a class="skip-link" href="#main-content">跳至正文</a>
+
+  <nav class="site-nav">
+    <div class="site-nav-inner">
+      <a class="site-logo" href="../index.html">
+        <img src="../resource/img/logo.webp" alt="" width="32" height="32" />
+        <span class="site-logo-text">沉星尽春</span>
+      </a>
+      <ul class="nav-links">
+        <li><a class="nav-link" href="../world/">卷首</a></li>
+        <li><a class="nav-link" href="../preset/">固设</a></li>
+        <li><a class="nav-link" href="../chars/">人设</a></li>
+        <li><a class="nav-link" href="../forces/">势力</a></li>
+        <li><a class="nav-link active" href="./">年表</a></li>
+        <li><a class="nav-link" href="../index.html#about">跋</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main id="main-content" class="section">
+    <div class="section-head reveal">
+      <span class="kicker">年 表</span>
+      <h1 class="section-title">景朝大事</h1>
+      <p class="section-lead">天和肇国，天启承统。大景王朝大事略记于后。</p>
+    </div>
+
+    <div class="timeline">
+      <h3 class="tl-era reveal in"><span>天和年间</span><small>太祖</small></h3>
+      <div class="tl-item reveal" data-delay="1">
+        <div class="tl-year">天和元年</div>
+        <p class="tl-event">太祖起兵，亡二国，立大景。</p>
+      </div>
+      <div class="tl-item reveal" data-delay="1">
+        <div class="tl-year">天和二年</div>
+        <p class="tl-event">饿殍千里，灾异数见。</p>
+      </div>
+      <div class="tl-item reveal" data-delay="2">
+        <div class="tl-year">天和三年</div>
+        <p class="tl-event">太祖躬行节俭，复科举，划土地，削兵权，兴百工。</p>
+      </div>
+      <div class="tl-item reveal" data-delay="2">
+        <div class="tl-year">天和十年</div>
+        <p class="tl-event">太祖积劳成疾，驾崩。遗一子，投井而亡。</p>
+      </div>
+
+      <h3 class="tl-era reveal" data-delay="2"><span>天启年间</span><small>今上</small></h3>
+      <div class="tl-item reveal" data-delay="3">
+        <div class="tl-year">天启元年</div>
+        <p class="tl-event">今上登基。二皇子、三皇子出生。</p>
+      </div>
+      <div class="tl-item reveal" data-delay="3">
+        <div class="tl-year">天启十年</div>
+        <p class="tl-event">四皇子、五皇子出生。</p>
+      </div>
+      <div class="tl-item reveal" data-delay="4">
+        <div class="tl-year">天启十三年</div>
+        <p class="tl-event">二皇子年十三，自请戍边，入北境军伍，拜谢氏家主为师。</p>
+      </div>
+      <div class="tl-item reveal" data-delay="4">
+        <div class="tl-year">天启？年</div>
+        <p class="tl-event">朱砂未干，长卷未尽。</p>
+        <p class="tl-desc">此后续事，看官且待下回分解。</p>
+      </div>
+    </div>
+
+    <p style="text-align:center;margin-top:56px;">
+      <a class="btn btn-ghost" href="../index.html#portals">← 返回目录</a>
+    </p>
+  </main>
+
+  <button class="float-nav float-nav-pulse" id="floatNav" title="返回顶部">↑</button>
+
+  <footer class="site-footer">
+    <img class="footer-seal"
+         src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'><rect x='4' y='4' width='40' height='40' rx='6' fill='%23c23a30'/><text x='24' y='33' font-family='serif' font-size='24' fill='white' text-anchor='middle'>尽</text></svg>"
+         alt="" />
+    <h3>沉星尽春</h3>
+    <p>© 2026 ChenXingJinChun · 朱砂落墨 · 尽春长卷</p>
+  </footer>
+
+  <script>
+    document.getElementById('floatNav').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal:not(.in)').forEach(el => io.observe(el));
+  </script>
+
+</body>
+</html>
