@@ -27,5 +27,6 @@
   <footer class="site-footer"><img class="footer-seal" src="../../resource/img/favicon.webp" alt="" /><h3>沉星尽春</h3><p>待选固设 · 三皇子</p></footer>
 <script>const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});document.querySelectorAll('.reveal:not(.in)').forEach(e=>io.observe(e));</script>
 <script>(function(){var ref=document.referrer;if(!ref)return;var m=ref.match(/forces\/(officials|royal)\//);if(!m)return;var url='../../forces/'+m[1]+'/',text='\u2190 \u8FD4\u56DE'+(m[1]==='officials'?'\u5927\u666F\u5B98\u5458\u540D\u5355':'\u7687\u5BB6\u7389\u7252');var el=document.querySelector('.character-back');if(el){el.href=url;el.textContent=text;}})();</script>
+<script>fetch('/resource/data/preset-selection.json').then(function(r){return r.ok?r.json():null}).then(function(d){if(!d||!Array.isArray(d.selected))return;var p=location.pathname.replace(/\/$/,''),m=p.match(/\/preset\/([a-z]+)(?:\/index\.html)?$/);if(!m||d.selected.indexOf(m[1])===-1)return;var h=document.querySelector('.preset-hero');if(h)h.classList.add('is-selected')}).catch(function(){})</script>
 </body>
 </html>

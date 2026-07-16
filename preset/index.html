@@ -39,7 +39,7 @@
     </div>
 
     <div class="chars settings-grid">
-      <a class="char-card setting-card reveal" data-delay="1" href="dahuangzi/" style="--cc: var(--cinnabar);">
+      <a class="char-card setting-card reveal" data-delay="1" data-preset="dahuangzi" href="dahuangzi/" style="--cc: var(--cinnabar);">
         <div class="char-portrait">大</div>
         <div class="char-body">
           <h3 class="char-name">大皇子</h3>
@@ -49,7 +49,7 @@
         </div>
       </a>
 
-      <a class="char-card setting-card reveal" data-delay="2" href="erhuangzi/" style="--cc: var(--cinnabar);">
+      <a class="char-card setting-card reveal" data-delay="2" data-preset="erhuangzi" href="erhuangzi/" style="--cc: var(--cinnabar);">
         <div class="char-portrait">二</div>
         <div class="char-body">
           <h3 class="char-name">二皇子</h3>
@@ -59,7 +59,7 @@
         </div>
       </a>
 
-      <a class="char-card setting-card reveal" data-delay="3" href="sanhuangzi/" style="--cc: var(--cinnabar);">
+      <a class="char-card setting-card reveal" data-delay="3" data-preset="sanhuangzi" href="sanhuangzi/" style="--cc: var(--cinnabar);">
         <div class="char-portrait">三</div>
         <div class="char-body">
           <h3 class="char-name">三皇子</h3>
@@ -69,7 +69,7 @@
         </div>
       </a>
 
-      <a class="char-card setting-card reveal" data-delay="1" href="sihuangzi/" style="--cc: var(--cinnabar);">
+      <a class="char-card setting-card reveal" data-delay="1" data-preset="sihuangzi" href="sihuangzi/" style="--cc: var(--cinnabar);">
         <div class="char-portrait">四</div>
         <div class="char-body">
           <h3 class="char-name">四皇子</h3>
@@ -79,7 +79,7 @@
         </div>
       </a>
 
-      <a class="char-card setting-card reveal" data-delay="2" href="wuhuangzi/" style="--cc: var(--cinnabar);">
+      <a class="char-card setting-card reveal" data-delay="2" data-preset="wuhuangzi" href="wuhuangzi/" style="--cc: var(--cinnabar);">
         <div class="char-portrait">五</div>
         <div class="char-body">
           <h3 class="char-name">五皇子</h3>
@@ -117,6 +117,20 @@
       entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
     }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
     document.querySelectorAll('.reveal:not(.in)').forEach(el => io.observe(el));
+
+    fetch('/resource/data/preset-selection.json').then(r => r.ok ? r.json() : null).then(d => {
+      if (!d || !Array.isArray(d.selected)) return;
+      document.querySelectorAll('.char-card.setting-card[data-preset]').forEach(c => {
+        const slug = c.getAttribute('data-preset');
+        if (d.selected.includes(slug)) {
+          c.classList.add('preset-card-selected');
+          const badge = document.createElement('span');
+          badge.className = 'preset-selected-badge';
+          badge.textContent = '已选';
+          c.appendChild(badge);
+        }
+      });
+    }).catch(() => {});
   </script>
 
 </body>

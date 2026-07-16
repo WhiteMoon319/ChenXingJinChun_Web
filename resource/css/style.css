@@ -1212,6 +1212,40 @@ body {
 }
 .preset-person:hover { color: var(--cc); border-color: var(--cc); transform: translateY(-2px); }
 
+/* ===== 固设选择状态 ===== */
+.preset-hero.is-selected::after {
+  content: '\5df2\9009';
+  opacity: 1;
+  font-weight: 600;
+  font-size: 0.82rem;
+  padding: 4px 16px;
+  background: var(--cc);
+  color: #fff;
+  border-radius: var(--radius-pill);
+  top: 14px;
+  right: 16px;
+}
+
+.preset-card-selected {
+  position: relative;
+  border-color: var(--cinnabar) !important;
+  box-shadow: 0 0 0 2px var(--cinnabar), var(--shadow-card) !important;
+}
+
+.preset-selected-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 4px 12px;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  color: #fff;
+  background: var(--cinnabar);
+  border-radius: var(--radius-pill);
+  z-index: 2;
+}
+
 
 /* ===== 题记 ===== */
 .epigraph {
