@@ -32,7 +32,13 @@
         { "title": "礼部尚书", "rank": "正三品", "holder": "", "slug": "" },
         { "title": "兵部尚书", "rank": "正三品", "holder": "", "slug": "" },
         { "title": "刑部尚书", "rank": "正三品", "holder": "", "slug": "" },
-        { "title": "工部尚书", "rank": "正三品", "holder": "", "slug": "" }
+        { "title": "工部尚书", "rank": "正三品", "holder": "", "slug": "" },
+        { "title": "吏部侍郎", "rank": "从三品", "holder": "江榫", "slug": "jiangsun" },
+        { "title": "户部侍郎", "rank": "从三品", "holder": "", "slug": "" },
+        { "title": "礼部侍郎", "rank": "从三品", "holder": "", "slug": "" },
+        { "title": "兵部侍郎", "rank": "从三品", "holder": "", "slug": "" },
+        { "title": "刑部侍郎", "rank": "从三品", "holder": "", "slug": "" },
+        { "title": "工部侍郎", "rank": "从三品", "holder": "", "slug": "" }
       ]
     },
     {
