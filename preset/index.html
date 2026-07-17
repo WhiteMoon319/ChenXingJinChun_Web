@@ -34,67 +34,13 @@
   <main id="main-content" class="section">
     <div class="section-head reveal">
       <span class="kicker">固 设</span>
-      <h1 class="section-title">待选固设</h1>
-      <p class="section-lead">今上五子，各有归途。择一入卷，点击可查看详细规则。</p>
+      <h1 class="section-title" id="ps-title">待选固设</h1>
+      <p class="section-lead" id="ps-lead">今上五子，各有归途。择一入卷，点击可查看详细规则。</p>
     </div>
 
-    <div class="chars settings-grid">
-      <a class="char-card setting-card reveal" data-delay="1" data-preset="dahuangzi" href="dahuangzi/" style="--cc: var(--cinnabar);">
-        <div class="char-portrait">大</div>
-        <div class="char-body">
-          <h3 class="char-name">大皇子</h3>
-          <p class="char-title">外饰儒风以自守，内烛君心之寒凉。</p>
-          <p class="char-quote">太子，自幼深受儒家熏陶。</p>
-          <div class="char-meta"><span class="kingdom-tag">太子</span><span>14岁</span></div>
-        </div>
-      </a>
+    <div class="chars settings-grid" id="ps-grid"></div>
 
-      <a class="char-card setting-card reveal" data-delay="2" data-preset="erhuangzi" href="erhuangzi/" style="--cc: var(--cinnabar);">
-        <div class="char-portrait">二</div>
-        <div class="char-body">
-          <h3 class="char-name">二皇子</h3>
-          <p class="char-title">少年横槊定边尘，赤心一片酬知己。</p>
-          <p class="char-quote">性情豪爽，喜骑射兵法，精于儒学。</p>
-          <div class="char-meta"><span class="kingdom-tag">戍将</span><span>13岁</span></div>
-        </div>
-      </a>
-
-      <a class="char-card setting-card reveal" data-delay="3" data-preset="sanhuangzi" href="sanhuangzi/" style="--cc: var(--cinnabar);">
-        <div class="char-portrait">三</div>
-        <div class="char-body">
-          <h3 class="char-name">三皇子</h3>
-          <p class="char-title">幼抱朽木之讥，长藏穿石之毒。</p>
-          <p class="char-quote">以勤补拙，对兄长暗生怨恨。</p>
-          <div class="char-meta"><span class="kingdom-tag">后继之君</span><span>13岁</span></div>
-        </div>
-      </a>
-
-      <a class="char-card setting-card reveal" data-delay="1" data-preset="sihuangzi" href="sihuangzi/" style="--cc: var(--cinnabar);">
-        <div class="char-portrait">四</div>
-        <div class="char-body">
-          <h3 class="char-name">四皇子</h3>
-          <p class="char-title">玉骨曾蒙圣眷，冷宫偏误韶华。</p>
-          <p class="char-quote">早产体弱，冷宫幽禁，三百书信未达。</p>
-          <div class="char-meta"><span class="kingdom-tag">冷宫遗珠</span><span>4岁</span></div>
-        </div>
-      </a>
-
-      <a class="char-card setting-card reveal" data-delay="2" data-preset="wuhuangzi" href="wuhuangzi/" style="--cc: var(--cinnabar);">
-        <div class="char-portrait">五</div>
-        <div class="char-body">
-          <h3 class="char-name">五皇子</h3>
-          <p class="char-title">昔为阶前乞儿，今作局中操盘。</p>
-          <p class="char-quote">自幼受虐，伪装君子，暗中操局。</p>
-          <div class="char-meta"><span class="kingdom-tag">暗处操盘</span><span>4岁</span></div>
-        </div>
-      </a>
-    </div>
-
-    <div class="epigraph reveal" data-delay="1" style="padding:80px 24px 0;">
-      <div class="epigraph-mark">"</div>
-      <blockquote style="font-size:clamp(1.4rem,3.6vw,2rem);">朱砂落墨处，兄弟各殊途。</blockquote>
-      <cite>—— 皇子固设</cite>
-    </div>
+    <div class="epigraph reveal" data-delay="1" style="padding:80px 24px 0;" id="ps-epigraph"></div>
 
     <p style="text-align:center;margin-top:48px;">
       <a class="btn btn-ghost" href="../index.html#portals">← 返回目录</a>
@@ -113,24 +59,67 @@
 
   <script>
     document.getElementById('floatNav').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
-    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-    document.querySelectorAll('.reveal:not(.in)').forEach(el => io.observe(el));
 
-    fetch('/resource/data/preset-selection.json').then(r => r.ok ? r.json() : null).then(d => {
-      if (!d || !Array.isArray(d.selected)) return;
+    async function loadPresets() {
+      const gridEl = document.getElementById('ps-grid');
+      try {
+        const resp = await fetch('../resource/data/presets.json');
+        if (!resp.ok) throw new Error(resp.status);
+        const data = await resp.json();
+        document.getElementById('ps-title').textContent = data.title;
+        document.getElementById('ps-lead').textContent = data.lead;
+        document.title = data.title + '｜沉星尽春';
+
+        let html = '';
+        data.presets.forEach((p, i) => {
+          const delay = [1, 2, 3, 1, 2][i] || 1;
+          html += '<a class="char-card setting-card reveal" data-delay="' + delay + '" data-preset="' + p.slug + '" href="detail.html?slug=' + p.slug + '" style="--cc: var(--cinnabar);">'
+            + '<div class="char-portrait">' + p.mark + '</div>'
+            + '<div class="char-body">'
+            + '<h3 class="char-name">' + p.name + '</h3>'
+            + '<p class="char-title">' + p.hero.subtitle + '</p>'
+            + '<p class="char-quote">' + (p.quote || '') + '</p>'
+            + '<div class="char-meta"><span class="kingdom-tag">' + p.tag + '</span><span>' + p.age + '</span></div>'
+            + '</div></a>';
+        });
+        gridEl.innerHTML = html;
+
+        if (data.epigraph) {
+          document.getElementById('ps-epigraph').innerHTML = '<div class="epigraph-mark">"</div>'
+            + '<blockquote style="font-size:clamp(1.4rem,3.6vw,2rem);">' + data.epigraph + '</blockquote>'
+            + '<cite>—— ' + (data.epigraphCite || '') + '</cite>';
+        }
+
+        markSelected(data);
+      } catch (e) {
+        gridEl.innerHTML = '<p style="text-align:center;color:var(--ink-mid);padding:40px 0;">固设数据暂未载入，待后续补充。</p>';
+      }
+      initObserver();
+    }
+
+    function markSelected(data) {
+      const selected = data.selected;
+      if (!Array.isArray(selected)) return;
       document.querySelectorAll('.char-card.setting-card[data-preset]').forEach(c => {
         const slug = c.getAttribute('data-preset');
-        if (d.selected.includes(slug)) {
-          c.classList.add('preset-card-selected');
-          const badge = document.createElement('span');
-          badge.className = 'preset-selected-badge';
-          badge.textContent = '已选';
-          c.appendChild(badge);
-        }
-      });
-    }).catch(() => {});
+        if (selected.includes(slug)) {
+            c.classList.add('preset-card-selected');
+            const badge = document.createElement('span');
+            badge.className = 'preset-selected-badge';
+            badge.textContent = '已选';
+            c.appendChild(badge);
+          }
+        });
+    }
+
+    function initObserver() {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+      document.querySelectorAll('.reveal:not(.in)').forEach(el => io.observe(el));
+    }
+
+    loadPresets();
   </script>
 
 </body>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>人物卷宗｜沉星尽春</title>
+  <meta name="description" content="沉星尽春人物卷宗。" />
+  <link rel="canonical" href="https://cxjc.whitemoon319.xyz/chars/" />
+  <link rel="icon" type="image/webp" href="../resource/img/favicon.webp" />
+  <link rel="stylesheet" href="../resource/css/style.css" />
+  <script defer src="../resource/js/site-nav.js"></script>
+</head>
+<body>
+  <nav class="site-nav"><div class="site-nav-inner"><a class="site-logo" href="../index.html"><img src="../resource/img/logo.webp" alt="沉星尽春" /><span class="site-logo-text">沉星尽春</span></a><ul class="nav-links"><li><a class="nav-link" href="../world/">卷首</a></li><li><a class="nav-link" href="../preset/">固设</a></li><li><a class="nav-link active" href="./">人设</a></li><li><a class="nav-link" href="../forces/">势力</a></li><li><a class="nav-link" href="../timeline/">年表</a></li><li><a class="nav-link" href="../index.html#about">跋</a></li></ul></div></nav>
+
+  <main class="character-page" style="--cc: var(--cinnabar);">
+    <a class="character-back" href="./">← 返回人设一览</a>
+    <section class="character-hero reveal in" id="char-hero"></section>
+    <div class="character-content" id="char-sections"></div>
+    <div class="character-pagination" id="char-pagination"></div>
+  </main>
+  <footer class="site-footer" id="char-footer"><img class="footer-seal" src="../resource/img/favicon.webp" alt="" /><h3>沉星尽春</h3><p>人物卷宗</p></footer>
+
+  <script>
+    const slug = new URLSearchParams(window.location.search).get('slug');
+    if (!slug) location.replace('./');
+
+    async function loadDetail() {
+      const heroEl = document.getElementById('char-hero');
+      const sectionsEl = document.getElementById('char-sections');
+      const paginationEl = document.getElementById('char-pagination');
+      const footerEl = document.getElementById('char-footer');
+      try {
+        const resp = await fetch('../resource/data/chars.json');
+        if (!resp.ok) throw new Error(resp.status);
+        const data = await resp.json();
+        const c = data.characters[slug];
+        if (!c) { location.replace('./'); return; }
+
+        document.title = c.name + '｜人物卷宗｜沉星尽春';
+        const metaDesc = document.querySelector('meta[name="description"]');
+        if (metaDesc) metaDesc.setAttribute('content', '沉星尽春人物卷宗：' + c.name + '，' + c.alias + '。');
+        const canonical = document.querySelector('link[rel="canonical"]');
+        if (canonical) canonical.setAttribute('href', 'https://cxjc.whitemoon319.xyz/chars/detail.html?slug=' + slug);
+
+        let heroHTML = '<div class="character-mark">' + c.mark + '</div><div>';
+        heroHTML += '<p class="character-kicker">人物卷宗</p>';
+        heroHTML += '<h1 class="character-heading">' + c.name + '</h1>';
+        heroHTML += '<p class="character-alias">' + c.alias + '</p>';
+        heroHTML += '<p class="character-lead">' + c.lead + '</p>';
+        heroHTML += '<div class="character-facts">';
+        c.tags.forEach(t => { heroHTML += '<span>' + t + '</span>'; });
+        heroHTML += '</div></div>';
+        heroEl.innerHTML = heroHTML;
+
+        let sectionsHTML = '';
+        c.sections.forEach((sec, si) => {
+          let cls = 'character-section reveal';
+          if (sec.wide) cls += ' wide';
+          const delay = si > 0 ? ' data-delay="' + si + '"' : '';
+          let body = '';
+          if (sec.list && sec.text.trim()) {
+            const items = sec.text.split('\n').filter(function(l) { return l.trim(); });
+            body = '<ul>' + items.map(function(l) { return '<li>' + l.trim() + '</li>'; }).join('') + '</ul>';
+          } else {
+            body = '<p>' + sec.text.replace(/\n/g, '<br>') + '</p>';
+          }
+          sectionsHTML += '<section class="' + cls + '"' + delay + '><h2>' + sec.heading + '</h2>' + body + '</section>';
+        });
+        sectionsEl.innerHTML = sectionsHTML;
+
+        const list = data.list;
+        const idx = list.indexOf(slug);
+        let pagHTML = '';
+        if (idx > 0) {
+          const prevSlug = list[idx - 1];
+          const prevC = data.characters[prevSlug];
+          pagHTML += '<a class="btn btn-ghost" href="detail.html?slug=' + prevSlug + '">← ' + (prevC ? prevC.name : '') + '</a>';
+        } else {
+          pagHTML += '<a class="btn btn-ghost" href="./">← 人设一览</a>';
+        }
+        if (idx >= 0 && idx < list.length - 1) {
+          const nextSlug = list[idx + 1];
+          const nextC = data.characters[nextSlug];
+          pagHTML += '<a class="btn btn-primary" href="detail.html?slug=' + nextSlug + '">' + (nextC ? nextC.name : '') + ' →</a>';
+        } else {
+          pagHTML += '<a class="btn btn-primary" href="./">人设一览 →</a>';
+        }
+        paginationEl.innerHTML = pagHTML;
+
+        footerEl.innerHTML = '<img class="footer-seal" src="../resource/img/favicon.webp" alt="" /><h3>沉星尽春</h3><p>人物卷宗 · ' + c.name + '</p>';
+
+      } catch (e) {
+        heroEl.innerHTML = '<p style="text-align:center;color:var(--ink-mid);padding:40px 0;">人物数据暂未载入，待后续补充。</p>';
+      }
+      initObserver();
+      handleReferrer();
+    }
+
+    function initObserver() {
+      const io = new IntersectionObserver(function(es) {
+        es.forEach(function(e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+      }, { threshold: 0.12 });
+      document.querySelectorAll('.reveal:not(.in)').forEach(function(e) { io.observe(e); });
+    }
+
+    function handleReferrer() {
+      var ref = document.referrer;
+      if (!ref) return;
+      var m = ref.match(/forces\/(officials|royal)\//);
+      if (!m) return;
+      var url = '../forces/' + m[1] + '/';
+      var text = '← 返回' + (m[1] === 'officials' ? '大景官员名单' : '皇家玉牒');
+      var el = document.querySelector('.character-back');
+      if (el) { el.href = url; el.textContent = text; }
+      var pa = document.querySelector('.character-pagination .btn-ghost');
+      if (pa && pa.textContent.indexOf('人设一览') >= 0) { pa.href = url; pa.textContent = text; }
+    }
+
+    loadDetail();
+  </script>
+</body>
+</html>

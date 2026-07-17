@@ -6,7 +6,7 @@
 
 ## 技术栈
 
-原生 HTML5 · CSS3 · JavaScript，零构建流程的纯静态站点，可直接部署到 GitHub Pages。
+原生 HTML5 · CSS3 · JavaScript，JSON 驱动渲染，零构建流程的纯静态站点，可直接部署到 GitHub Pages。Python 脚本辅助管理 JSON 数据。
 
 ## 页面导览
 
@@ -36,16 +36,14 @@ python -m http.server 8000
 .
 ├── index.html
 ├── m/index.html
+├── py/               # gen_char.py、del_char.py
 ├── world/index.html
 ├── preset/
 │   ├── index.html
-│   └── {dahuangzi,erhuangzi,sanhuangzi,sihuangzi,wuhuangzi}/index.html
+│   └── detail.html
 ├── chars/
 │   ├── index.html
-│   ├── jiangsun/index.html
-│   ├── muche/index.html
-│   ├── muheng/index.html
-│   └── muqiao/index.html
+│   └── detail.html
 ├── forces/
 │   ├── index.html
 │   ├── officials/index.html
@@ -57,7 +55,7 @@ python -m http.server 8000
 │   │   └── mobile.css
 │   ├── js/site-nav.js
 │   ├── img/            # Logo、背景、舆图
-│   └── data/           # officials.json、royal.json
+│   └── data/           # JSON 数据文件
 ├── CNAME
 ├── robots.txt
 ├── sitemap.xml
@@ -107,16 +105,23 @@ python -m http.server 8000
 
 ```html
 <script defer src="resource/js/site-nav.js"></script>       <!-- 根目录 -->
-<script defer src="../resource/js/site-nav.js"></script>    <!-- 一级目录 -->
-<script defer src="../../resource/js/site-nav.js"></script> <!-- 二级详情 -->
+<script defer src="../resource/js/site-nav.js"></script>    <!-- 一级目录及 detail.html -->
+<script defer src="../../resource/js/site-nav.js"></script> <!-- 二级目录（如 forces/officials/） -->
 ```
 
-### 新增内容页
+### 新增内容
 
-复制同类型现有页面后修改标题、描述、正文与主题变量，并确认：
+内容数据以 JSON 存储于 `resource/data/`，页面通过 `fetch` 动态渲染。
 
-- 资源引用路径正确
-- 当前导航项带 `active` 类
-- 页面包含 `viewport` 声明与 `canonical` 链接
-- 正文使用 `.reveal` 渐入；首屏内容额外加 `.in`
-- 内联脚本（滚动动画、返回顶部）一并保留
+- **人设**：`py/gen_char.py` 写入 `resource/data/chars.json`，`chars/` 下页面自动读取渲染
+- **删除人设**：`py/del_char.py` 从 JSON 移除条目
+- **固设、年表、势力**：直接编辑对应 JSON 文件即可
+
+```bash
+python py/gen_char.py                       # 交互式创建
+python py/gen_char.py --file input.txt      # 批量导入
+python py/del_char.py -i -b                 # 交互式批量删除
+python py/del_char.py muche jiangsun        # 按 slug 删除
+```
+
+> 不再需要复制 HTML 模板或手动修改列表页，所有列表与详情页均由 JSON 驱动。

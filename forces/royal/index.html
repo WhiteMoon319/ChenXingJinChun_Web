@@ -58,9 +58,9 @@
           const label = m.name || m.title;
           let nameCell;
           if (m.slug) {
-            nameCell = '<a href="../../chars/' + m.slug + '/" class="roster-link">' + label + '</a>';
+            nameCell = '<a href="../../chars/detail.html?slug=' + m.slug + '" class="roster-link">' + label + '</a>';
           } else if (m.preset) {
-            nameCell = '<a href="../../preset/' + m.preset + '/" class="roster-link">' + label + '</a>';
+            nameCell = '<a href="../../preset/detail.html?slug=' + m.preset + '" class="roster-link">' + label + '</a>';
           } else {
             nameCell = m.name || '';
           }

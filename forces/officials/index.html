@@ -63,7 +63,7 @@
           html += '<table class="roster-table"><thead><tr><th>官职</th><th>品级</th><th>任职</th></tr></thead><tbody>';
           g.positions.forEach(p => {
             const cell = p.slug
-              ? '<a href="../../chars/' + p.slug + '/" class="roster-link">' + p.holder + '</a>'
+              ? '<a href="../../chars/detail.html?slug=' + p.slug + '" class="roster-link">' + p.holder + '</a>'
               : p.holder || '';
             html += '<tr><td>' + p.title + '</td><td><span class="roster-rank">' + p.rank + '</span></td><td><span class="roster-holder">' + cell + '</span></td></tr>';
           });

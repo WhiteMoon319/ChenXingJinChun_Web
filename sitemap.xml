@@ -6,15 +6,15 @@
   <url><loc>https://cxjc.whitemoon319.xyz/forces/officials/</loc></url>
   <url><loc>https://cxjc.whitemoon319.xyz/forces/royal/</loc></url>
   <url><loc>https://cxjc.whitemoon319.xyz/preset/</loc></url>
-  <url><loc>https://cxjc.whitemoon319.xyz/preset/dahuangzi/</loc></url>
-  <url><loc>https://cxjc.whitemoon319.xyz/preset/erhuangzi/</loc></url>
-  <url><loc>https://cxjc.whitemoon319.xyz/preset/sanhuangzi/</loc></url>
-  <url><loc>https://cxjc.whitemoon319.xyz/preset/sihuangzi/</loc></url>
-  <url><loc>https://cxjc.whitemoon319.xyz/preset/wuhuangzi/</loc></url>
+  <url><loc>https://cxjc.whitemoon319.xyz/preset/detail.html?slug=dahuangzi</loc></url>
+  <url><loc>https://cxjc.whitemoon319.xyz/preset/detail.html?slug=erhuangzi</loc></url>
+  <url><loc>https://cxjc.whitemoon319.xyz/preset/detail.html?slug=sanhuangzi</loc></url>
+  <url><loc>https://cxjc.whitemoon319.xyz/preset/detail.html?slug=sihuangzi</loc></url>
+  <url><loc>https://cxjc.whitemoon319.xyz/preset/detail.html?slug=wuhuangzi</loc></url>
   <url><loc>https://cxjc.whitemoon319.xyz/chars/</loc></url>
-  <url><loc>https://cxjc.whitemoon319.xyz/chars/muqiao/</loc></url>
-  <url><loc>https://cxjc.whitemoon319.xyz/chars/muheng/</loc></url>
-  <url><loc>https://cxjc.whitemoon319.xyz/chars/jiangsun/</loc></url>
-  <url><loc>https://cxjc.whitemoon319.xyz/chars/muche/</loc></url>
+  <url><loc>https://cxjc.whitemoon319.xyz/chars/detail.html?slug=muche</loc></url>
+  <url><loc>https://cxjc.whitemoon319.xyz/chars/detail.html?slug=jiangsun</loc></url>
+  <url><loc>https://cxjc.whitemoon319.xyz/chars/detail.html?slug=muheng</loc></url>
+  <url><loc>https://cxjc.whitemoon319.xyz/chars/detail.html?slug=muqiao</loc></url>
   <url><loc>https://cxjc.whitemoon319.xyz/timeline/</loc></url>
 </urlset>

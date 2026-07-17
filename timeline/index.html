@@ -34,48 +34,11 @@
   <main id="main-content" class="section">
     <div class="section-head reveal">
       <span class="kicker">年 表</span>
-      <h1 class="section-title">景朝大事</h1>
-      <p class="section-lead">天和肇国，天启承统。大景王朝大事略记于后。</p>
+      <h1 class="section-title" id="tl-title">景朝大事</h1>
+      <p class="section-lead" id="tl-lead">天和肇国，天启承统。大景王朝大事略记于后。</p>
     </div>
 
-    <div class="timeline">
-      <h3 class="tl-era reveal in"><span>天和年间</span><small>太祖</small></h3>
-      <div class="tl-item reveal" data-delay="1">
-        <div class="tl-year">天和元年</div>
-        <p class="tl-event">太祖起兵，亡二国，立大景。</p>
-      </div>
-      <div class="tl-item reveal" data-delay="1">
-        <div class="tl-year">天和二年</div>
-        <p class="tl-event">饿殍千里，灾异数见。</p>
-      </div>
-      <div class="tl-item reveal" data-delay="2">
-        <div class="tl-year">天和三年</div>
-        <p class="tl-event">太祖躬行节俭，复科举，划土地，削兵权，兴百工。</p>
-      </div>
-      <div class="tl-item reveal" data-delay="2">
-        <div class="tl-year">天和十年</div>
-        <p class="tl-event">太祖积劳成疾，驾崩。遗一子，投井而亡。</p>
-      </div>
-
-      <h3 class="tl-era reveal" data-delay="2"><span>天启年间</span><small>今上</small></h3>
-      <div class="tl-item reveal" data-delay="3">
-        <div class="tl-year">天启元年</div>
-        <p class="tl-event">今上登基。二皇子、三皇子出生。</p>
-      </div>
-      <div class="tl-item reveal" data-delay="3">
-        <div class="tl-year">天启十年</div>
-        <p class="tl-event">四皇子、五皇子出生。</p>
-      </div>
-      <div class="tl-item reveal" data-delay="4">
-        <div class="tl-year">天启十三年</div>
-        <p class="tl-event">二皇子年十三，自请戍边，入北境军伍，拜谢氏家主为师。</p>
-      </div>
-      <div class="tl-item reveal" data-delay="4">
-        <div class="tl-year">天启？年</div>
-        <p class="tl-event">朱砂未干，长卷未尽。</p>
-        <p class="tl-desc">此后续事，看官且待下回分解。</p>
-      </div>
-    </div>
+    <div class="timeline" id="tl-content"></div>
 
     <p style="text-align:center;margin-top:56px;">
       <a class="btn btn-ghost" href="../index.html#portals">← 返回目录</a>
@@ -94,10 +57,44 @@
 
   <script>
     document.getElementById('floatNav').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
-    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-    document.querySelectorAll('.reveal:not(.in)').forEach(el => io.observe(el));
+
+    async function loadTimeline() {
+      const el = document.getElementById('tl-content');
+      try {
+        const resp = await fetch('../resource/data/timeline.json');
+        if (!resp.ok) throw new Error(resp.status);
+        const data = await resp.json();
+        document.getElementById('tl-title').textContent = data.title;
+        document.getElementById('tl-lead').textContent = data.lead;
+        document.title = data.title + '｜剧情年表｜沉星尽春';
+        let html = '';
+        data.eras.forEach(era => {
+          const ei = era.delay != null ? era.delay : 0;
+          html += '<h3 class="tl-era reveal' + (ei === 0 ? ' in' : '') + '"'
+            + (ei > 0 ? ' data-delay="' + ei + '"' : '')
+            + '><span>' + era.name + '</span><small>' + era.subtitle + '</small></h3>';
+          era.events.forEach(ev => {
+            const di = ev.delay != null ? ev.delay : 0;
+            html += '<div class="tl-item reveal"'
+              + (di > 0 ? ' data-delay="' + di + '"' : '')
+              + '><div class="tl-year">' + ev.year + '</div>'
+              + '<p class="tl-event">' + ev.event + '</p>';
+            if (ev.desc) {
+              html += '<p class="tl-desc">' + ev.desc + '</p>';
+            }
+            html += '</div>';
+          });
+        });
+        el.innerHTML = html;
+      } catch (e) {
+        el.innerHTML = '<p style="text-align:center;color:var(--ink-mid);padding:40px 0;">年表数据暂未载入，待后续补充。</p>';
+      }
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+      document.querySelectorAll('.reveal:not(.in)').forEach(el => io.observe(el));
+    }
+    loadTimeline();
   </script>
 
 </body>

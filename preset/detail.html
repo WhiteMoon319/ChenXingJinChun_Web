@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>待选固设｜沉星尽春</title>
+  <meta name="description" content="沉星尽春待选皇子固设。" />
+  <link rel="canonical" href="https://cxjc.whitemoon319.xyz/preset/" />
+  <link rel="icon" type="image/webp" href="../resource/img/favicon.webp" />
+  <link rel="stylesheet" href="../resource/css/style.css" />
+  <script defer src="../resource/js/site-nav.js"></script>
+</head>
+<body>
+  <nav class="site-nav"><div class="site-nav-inner"><a class="site-logo" href="../index.html"><img src="../resource/img/logo.webp" alt="沉星尽春" /><span class="site-logo-text">沉星尽春</span></a><ul class="nav-links"><li><a class="nav-link" href="../world/">卷首</a></li><li><a class="nav-link active" href="./">固设</a></li><li><a class="nav-link" href="../chars/">人设</a></li><li><a class="nav-link" href="../forces/">势力</a></li><li><a class="nav-link" href="../timeline/">年表</a></li><li><a class="nav-link" href="../index.html#about">跋</a></li></ul></div></nav>
+  <main class="preset-page" style="--cc: var(--cinnabar);">
+    <a class="character-back" href="./">← 返回待选固设</a>
+    <section class="preset-hero reveal in" id="preset-hero"></section>
+    <div id="preset-sections"></div>
+    <div class="character-pagination" id="preset-pagination"></div>
+  </main>
+  <footer class="site-footer" id="preset-footer"><img class="footer-seal" src="../resource/img/favicon.webp" alt="" /><h3>沉星尽春</h3><p>待选固设</p></footer>
+
+  <script>
+    const slug = new URLSearchParams(window.location.search).get('slug');
+    if (!slug) location.replace('./');
+
+    async function loadDetail() {
+      const heroEl = document.getElementById('preset-hero');
+      const sectionsEl = document.getElementById('preset-sections');
+      const paginationEl = document.getElementById('preset-pagination');
+      const footerEl = document.getElementById('preset-footer');
+      try {
+        const resp = await fetch('../resource/data/presets.json');
+        if (!resp.ok) throw new Error(resp.status);
+        const data = await resp.json();
+        const p = data.presets.find(x => x.slug === slug);
+        if (!p) { location.replace('./'); return; }
+
+        document.title = p.name + '｜待选固设｜沉星尽春';
+        const metaDesc = document.querySelector('meta[name="description"]');
+        if (metaDesc) metaDesc.setAttribute('content', p.desc);
+        const canonical = document.querySelector('link[rel="canonical"]');
+        if (canonical) canonical.setAttribute('href', 'https://cxjc.whitemoon319.xyz/preset/detail.html?slug=' + slug);
+
+        const h = p.hero;
+        let heroHTML = '<div class="preset-mark">' + p.mark + '</div><div>';
+        heroHTML += '<p class="character-kicker">' + h.kicker + '</p>';
+        heroHTML += '<h1 class="preset-title">' + h.title + '</h1>';
+        heroHTML += '<p class="preset-subtitle">' + h.subtitle + '</p>';
+        heroHTML += '<p class="preset-summary">' + h.summary + '</p>';
+        heroHTML += '<div class="preset-stats">';
+        h.stats.forEach(s => {
+          heroHTML += '<div class="preset-stat"><small>' + s.label + '</small><strong>' + s.value + '</strong></div>';
+        });
+        heroHTML += '</div></div>';
+        heroEl.innerHTML = heroHTML;
+
+        let sectionsHTML = '';
+        p.sections.forEach((sec, si) => {
+          const delay = si === 0 ? '' : ' data-delay="' + si + '"';
+          sectionsHTML += '<section class="preset-block reveal"' + delay + '><h2>' + sec.title + '</h2>';
+          if (sec.type === 'options') {
+            sectionsHTML += '<div class="preset-options">';
+            sec.options.forEach(opt => {
+              sectionsHTML += '<article class="preset-option"><h3>' + opt.title + '</h3><p>' + opt.text + '</p></article>';
+            });
+            sectionsHTML += '</div>';
+          } else if (sec.type === 'links') {
+            sectionsHTML += '<div class="preset-links">';
+            sec.links.forEach(link => {
+              sectionsHTML += '<a class="preset-person" href="detail.html?slug=' + link.slug + '">' + link.label + '</a>';
+            });
+            sectionsHTML += '</div>';
+          } else {
+            sectionsHTML += '<p class="preset-list">' + sec.text + '</p>';
+          }
+          sectionsHTML += '</section>';
+        });
+        sectionsEl.innerHTML = sectionsHTML;
+
+        let pagHTML = '';
+        if (p.prev) {
+          const prevP = data.presets.find(x => x.slug === p.prev);
+          pagHTML += '<a class="btn btn-ghost" href="detail.html?slug=' + p.prev + '">← ' + (prevP ? prevP.name : '') + '</a>';
+        } else {
+          pagHTML += '<a class="btn btn-ghost" href="./">← 待选固设</a>';
+        }
+        if (p.next) {
+          const nextP = data.presets.find(x => x.slug === p.next);
+          pagHTML += '<a class="btn btn-primary" href="detail.html?slug=' + p.next + '">' + (nextP ? nextP.name : '') + ' →</a>';
+        } else {
+          pagHTML += '<a class="btn btn-primary" href="./">待选固设 →</a>';
+        }
+        paginationEl.innerHTML = pagHTML;
+
+        footerEl.innerHTML = '<img class="footer-seal" src="../resource/img/favicon.webp" alt="" /><h3>沉星尽春</h3><p>待选固设 · ' + p.name + '</p>';
+
+        markSelected(data);
+
+      } catch (e) {
+        heroEl.innerHTML = '<p style="text-align:center;color:var(--ink-mid);padding:40px 0;">固设数据暂未载入，待后续补充。</p>';
+      }
+      initObserver();
+    }
+
+    function markSelected(data) {
+      var selected = data.selected;
+      if (!Array.isArray(selected)) return;
+      if (!selected.includes(slug)) return;
+      var h = document.querySelector('.preset-hero');
+      if (h) h.classList.add('is-selected');
+    }
+
+    function initObserver() {
+      const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: 0.12 });
+      document.querySelectorAll('.reveal:not(.in)').forEach(e => io.observe(e));
+    }
+
+    (function() {
+      var ref = document.referrer;
+      if (!ref) return;
+      var m = ref.match(/forces\/(officials|royal)\//);
+      if (!m) return;
+      var url = '../forces/' + m[1] + '/';
+      var text = '\u2190 \u8FD4\u56DE' + (m[1] === 'officials' ? '\u5927\u666F\u5B98\u5458\u540D\u5355' : '\u7687\u5BB6\u7389\u7252');
+      var el = document.querySelector('.character-back');
+      if (el) { el.href = url; el.textContent = text; }
+      var pa = document.querySelector('.character-pagination .btn-ghost');
+      if (pa && pa.textContent.indexOf('\u5F85\u9009\u56FA\u8BBE') >= 0) { pa.href = url; pa.textContent = text; }
+    })();
+
+    loadDetail();
+  </script>
+</body>
+</html>

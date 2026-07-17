@@ -32,62 +32,13 @@
   </nav>
 
   <main id="main-content" class="section">
-    <div class="section-head reveal">
+    <div class="section-head reveal in">
       <span class="kicker">人 设</span>
-      <h1 class="section-title">朱砂所点</h1>
-      <p class="section-lead">朱砂所点，群像登场。点击查看各人物详情卷宗。</p>
+      <h1 class="section-title" id="chars-title">朱砂所点</h1>
+      <p class="section-lead" id="chars-lead">朱砂所点，群像登场。点击查看各人物详情卷宗。</p>
     </div>
 
-    <div class="chars">
-      <a class="char-card reveal" data-delay="1" href="muche/" style="--cc: var(--cinnabar);">
-        <div class="char-portrait">慕</div>
-        <div class="char-body">
-          <h3 class="char-name">慕澈</h3>
-          <p class="char-title">外貌 · 衣着 · 经历 · 性格 · 备注</p>
-          <p class="char-quote">克己奉公、洞若观火、勤政贤明、果断决绝、手段狠绝却不暴戾</p>
-          <div class="char-meta">
-            <span class="kingdom-tag">皇室</span>
-            <span>存活</span>
-          </div>
-        </div>
-      </a>
-      <a class="char-card reveal" data-delay="2" href="jiangsun/" style="--cc: var(--cinnabar);">
-        <div class="char-portrait">江</div>
-        <div class="char-body">
-          <h3 class="char-name">江榫</h3>
-          <p class="char-title">外貌 · 衣着 · 经历 · 性格 · 备注</p>
-          <p class="char-quote">温文尔雅 谨言慎行 心思细腻 冷静果敢</p>
-          <div class="char-meta">
-            <span class="kingdom-tag">百官</span>
-            <span>存活</span>
-          </div>
-        </div>
-      </a>
-      <a class="char-card reveal" data-delay="3" href="muheng/" style="--cc: var(--cinnabar);">
-        <div class="char-portrait">慕</div>
-        <div class="char-body">
-          <h3 class="char-name">慕衡</h3>
-          <p class="char-title">外貌 · 衣着 · 经历 · 性格 · 备注</p>
-          <p class="char-quote">外敛内烈，清醒自持，清冷孤高，韧如寒松</p>
-          <div class="char-meta">
-            <span class="kingdom-tag">皇室</span>
-            <span>存活</span>
-          </div>
-        </div>
-      </a>
-      <a class="char-card reveal" data-delay="4" href="muqiao/" style="--cc: var(--cinnabar);">
-        <div class="char-portrait">慕</div>
-        <div class="char-body">
-          <h3 class="char-name">慕乔</h3>
-          <p class="char-title">外貌 · 衣着 · 经历 · 性格 · 备注</p>
-          <p class="char-quote">心有城府虑周藻密，八面玲珑性敏善察，自爱善妒偏执多疑，温良其</p>
-          <div class="char-meta">
-            <span class="kingdom-tag">皇室</span>
-            <span>存活</span>
-          </div>
-        </div>
-      </a>
-    </div>
+    <div class="chars" id="chars-grid"></div>
 
     <p style="text-align:center;margin-top:56px;">
       <a class="btn btn-ghost" href="../index.html#portals">← 返回目录</a>
@@ -106,10 +57,43 @@
 
   <script>
     document.getElementById('floatNav').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
-    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-    document.querySelectorAll('.reveal:not(.in)').forEach(el => io.observe(el));
+
+    async function loadChars() {
+      const gridEl = document.getElementById('chars-grid');
+      try {
+        const resp = await fetch('../resource/data/chars.json');
+        if (!resp.ok) throw new Error(resp.status);
+        const data = await resp.json();
+        document.getElementById('chars-title').textContent = data.title;
+        document.getElementById('chars-lead').textContent = data.lead;
+        document.title = data.title + '｜沉星尽春';
+
+        let html = '';
+        data.list.forEach((slug, i) => {
+          const c = data.characters[slug];
+          if (!c) return;
+          const delay = i + 1;
+          html += '<a class="char-card reveal" data-delay="' + delay + '" href="detail.html?slug=' + slug + '" style="--cc: var(--cinnabar);">'
+            + '<div class="char-portrait">' + c.mark + '</div>'
+            + '<div class="char-body">'
+            + '<h3 class="char-name">' + c.name + '</h3>'
+            + '<p class="char-title">外貌 · 衣着 · 经历 · 性格 · 备注</p>'
+            + '<p class="char-quote">' + (c.quote || '') + '</p>'
+            + '<div class="char-meta">'
+            + '<span class="kingdom-tag">' + (c.faction || '') + '</span>'
+            + '<span>' + (c.status || '') + '</span>'
+            + '</div></div></a>';
+        });
+        gridEl.innerHTML = html || '<p style="text-align:center;color:var(--ink-mid);padding:40px 0;">人物卷宗尚未录入，待正式设定后逐一补全。</p>';
+      } catch (e) {
+        gridEl.innerHTML = '<p style="text-align:center;color:var(--ink-mid);padding:40px 0;">人物数据暂未载入，待后续补充。</p>';
+      }
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+      document.querySelectorAll('.reveal:not(.in)').forEach(el => io.observe(el));
+    }
+    loadChars();
   </script>
 
 </body>
