@@ -71,12 +71,12 @@
         data.eras.forEach(era => {
           const ei = era.delay != null ? era.delay : 0;
           html += '<h3 class="tl-era reveal' + (ei === 0 ? ' in' : '') + '"'
-            + (ei > 0 ? ' data-delay="' + ei + '"' : '')
+            + (ei > 0 ? ' style="transition-delay:' + (ei * 0.08).toFixed(2) + 's"' : '')
             + '><span>' + era.name + '</span><small>' + era.subtitle + '</small></h3>';
           era.events.forEach(ev => {
             const di = ev.delay != null ? ev.delay : 0;
             html += '<div class="tl-item reveal"'
-              + (di > 0 ? ' data-delay="' + di + '"' : '')
+              + (di > 0 ? ' style="transition-delay:' + (di * 0.08).toFixed(2) + 's"' : '')
               + '><div class="tl-year">' + ev.year + '</div>'
               + '<p class="tl-event">' + ev.event + '</p>';
             if (ev.desc) {

@@ -57,7 +57,7 @@
         c.sections.forEach((sec, si) => {
           let cls = 'character-section reveal';
           if (sec.wide) cls += ' wide';
-          const delay = si > 0 ? ' data-delay="' + si + '"' : '';
+          const delay = si > 0 ? ' style="transition-delay:' + (si * 0.08).toFixed(2) + 's"' : '';
           let body = '';
           if (sec.list && sec.text.trim()) {
             const items = sec.text.split('\n').filter(function(l) { return l.trim(); });

@@ -72,8 +72,8 @@
 
         let html = '';
         data.presets.forEach((p, i) => {
-          const delay = [1, 2, 3, 1, 2][i] || 1;
-          html += '<a class="char-card setting-card reveal" data-delay="' + delay + '" data-preset="' + p.slug + '" href="detail.html?slug=' + p.slug + '" style="--cc: var(--cinnabar);">'
+          const delay = (([1, 2, 3, 1, 2][i] || 1) * 0.08).toFixed(2);
+          html += '<a class="char-card setting-card reveal" data-preset="' + p.slug + '" href="detail.html?slug=' + p.slug + '" style="--cc: var(--cinnabar);transition-delay:' + delay + 's">'
             + '<div class="char-portrait">' + p.mark + '</div>'
             + '<div class="char-body">'
             + '<h3 class="char-name">' + p.name + '</h3>'

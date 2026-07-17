@@ -72,8 +72,8 @@
         data.list.forEach((slug, i) => {
           const c = data.characters[slug];
           if (!c) return;
-          const delay = i + 1;
-          html += '<a class="char-card reveal" data-delay="' + delay + '" href="detail.html?slug=' + slug + '" style="--cc: var(--cinnabar);">'
+          const delay = ((i + 1) * 0.08).toFixed(2);
+          html += '<a class="char-card reveal" href="detail.html?slug=' + slug + '" style="--cc: var(--cinnabar);transition-delay:' + delay + 's">'
             + '<div class="char-portrait">' + c.mark + '</div>'
             + '<div class="char-body">'
             + '<h3 class="char-name">' + c.name + '</h3>'

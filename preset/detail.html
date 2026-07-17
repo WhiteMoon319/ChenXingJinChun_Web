@@ -57,7 +57,7 @@
 
         let sectionsHTML = '';
         p.sections.forEach((sec, si) => {
-          const delay = si === 0 ? '' : ' data-delay="' + si + '"';
+          const delay = si === 0 ? '' : ' style="transition-delay:' + (si * 0.08).toFixed(2) + 's"';
           sectionsHTML += '<section class="preset-block reveal"' + delay + '><h2>' + sec.title + '</h2>';
           if (sec.type === 'options') {
             sectionsHTML += '<div class="preset-options">';
