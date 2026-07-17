@@ -7,6 +7,6 @@
     { "title": "二皇子", "name": "", "life": "生", "slug": "", "preset": "erhuangzi", "note": "" },
     { "title": "三皇子", "name": "", "life": "生", "slug": "", "preset": "sanhuangzi", "note": "" },
     { "title": "四皇子", "name": "慕衡", "life": "生", "slug": "muheng", "preset": "sihuangzi", "note": "" },
-    { "title": "五皇子", "name": "", "life": "生", "slug": "", "preset": "wuhuangzi", "note": "" }
+    { "title": "五皇子", "name": "慕乔", "life": "生", "slug": "muqiao", "preset": "wuhuangzi", "note": "" }
   ]
 }
