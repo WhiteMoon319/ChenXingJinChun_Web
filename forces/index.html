@@ -12,9 +12,9 @@
   <style>
     .forces-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 24px;
-      max-width: 600px;
+      max-width: 900px;
       margin: 0 auto;
     }
     .force-card {
@@ -41,6 +41,7 @@
     }
     .force-seal.off { background: var(--cinnabar); }
     .force-seal.roy { background: var(--deep-blue); }
+    .force-seal.clan { background: var(--amber); }
     .force-card h3 { font-family: var(--font-serif); font-size: 1.1rem; color: var(--ink-deep); margin: 0; }
     .force-card p { font-size: 0.85rem; color: var(--ink-mid); margin: 0; }
     @media (max-width: 480px) {
@@ -86,6 +87,11 @@
         <div class="force-seal roy">皇</div>
         <h3>皇家玉牒</h3>
         <p>太祖肇国 · 今上五子 · 血脉谱系</p>
+      </a>
+      <a class="force-card reveal" data-delay="3" href="clans/">
+        <div class="force-seal clan">世</div>
+        <h3>世家谱牒</h3>
+        <p>开国勋望 · 文武鼎族 · 世代簪缨</p>
       </a>
     </div>
 

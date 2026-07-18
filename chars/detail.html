@@ -107,10 +107,11 @@
     function handleReferrer() {
       var ref = document.referrer;
       if (!ref) return;
-      var m = ref.match(/forces\/(officials|royal)\//);
+      var m = ref.match(/forces\/(officials|royal|clans)\//);
       if (!m) return;
       var url = '../forces/' + m[1] + '/';
-      var text = '← 返回' + (m[1] === 'officials' ? '大景官员名单' : '皇家玉牒');
+      var label = m[1] === 'officials' ? '大景官员名单' : (m[1] === 'royal' ? '皇家玉牒' : '世家谱牒');
+      var text = '← 返回' + label;
       var el = document.querySelector('.character-back');
       if (el) { el.href = url; el.textContent = text; }
       var pa = document.querySelector('.character-pagination .btn-ghost');
