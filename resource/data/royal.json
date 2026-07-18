@@ -5,7 +5,7 @@
     { "title": "皇帝", "name": "慕澈", "life": "生", "slug": "muche", "preset": "", "note": "今上" },
     { "title": "大皇子", "name": "慕苍", "life": "生", "slug": "mucang", "preset": "dahuangzi", "note": "太子" },
     { "title": "二皇子", "name": "慕行策", "life": "生", "slug": "muxingce", "preset": "erhuangzi", "note": "" },
-    { "title": "三皇子", "name": "", "life": "生", "slug": "", "preset": "sanhuangzi", "note": "" },
+    { "title": "三皇子", "name": "慕之恒", "life": "生", "slug": "muzhiheng", "preset": "sanhuangzi", "note": "" },
     { "title": "四皇子", "name": "慕衡", "life": "生", "slug": "muheng", "preset": "sihuangzi", "note": "" },
     { "title": "五皇子", "name": "慕乔", "life": "生", "slug": "muqiao", "preset": "wuhuangzi", "note": "" }
   ]
