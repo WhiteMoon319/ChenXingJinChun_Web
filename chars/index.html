@@ -78,7 +78,7 @@
             + '<div class="char-body">'
             + '<h3 class="char-name">' + c.name + '</h3>'
             + '<p class="char-title">外貌 · 衣着 · 经历 · 性格 · 备注</p>'
-            + '<p class="char-quote">' + (c.quote || '') + '</p>'
+            + '<p class="char-quote">' + ((c.quote && c.quote.replace(/\n/g,'').length > 20) ? c.quote.replace(/\n/g,'').substring(0,20) + '...' : (c.quote || '')) + '</p>'
             + '<div class="char-meta">'
             + '<span class="kingdom-tag">' + (c.faction || '') + '</span>'
             + '<span>' + (c.status || '') + '</span>'
