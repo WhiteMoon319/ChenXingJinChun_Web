@@ -29,10 +29,10 @@
       "positions": [
         { "title": "吏部尚书", "rank": "正三品", "holder": "", "slug": "" },
         { "title": "户部尚书", "rank": "正三品", "holder": "", "slug": "" },
-        { "title": "礼部尚书", "rank": "正三品", "holder": "", "slug": "" },
+        { "title": "礼部尚书", "rank": "正三品", "holder": "祁远", "slug": "qiyuan" },
         { "title": "兵部尚书", "rank": "正三品", "holder": "", "slug": "" },
         { "title": "刑部尚书", "rank": "正三品", "holder": "", "slug": "" },
-        { "title": "工部尚书", "rank": "正三品", "holder": "", "slug": "" },
+        { "title": "工部尚书", "rank": "正三品", "holder": "亓贺", "slug": "qihe" },
         { "title": "吏部侍郎", "rank": "从三品", "holder": "江榫", "slug": "jiangsun" },
         { "title": "户部侍郎", "rank": "从三品", "holder": "", "slug": "" },
         { "title": "礼部侍郎", "rank": "从三品", "holder": "", "slug": "" },
